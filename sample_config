@@ -1,0 +1,6 @@
+default_context:
+    package_name: example
+    module_name: example
+    description: description
+    cli_script: cliscript
+    docker_container_name: example_docker_container_name
