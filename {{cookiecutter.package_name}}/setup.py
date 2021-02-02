@@ -9,7 +9,7 @@ setup(
         'typer',
     ],
     entry_points={
-        "console_scripts": ["{{cookiecutter.package_name}} = {{cookiecutter.package_name}}.main:main"]
+        "console_scripts": ["{{cookiecutter.cli_script}} = {{cookiecutter.module_name}}.main:main"]
     },        
     {%- if cookiecutter.python_version %}
     python_requires='>={{cookiecutter.python_version}}'
