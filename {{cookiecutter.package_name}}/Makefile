@@ -67,3 +67,21 @@ virtualenv-lint:
 
 readme-convert-markdown-rst:
 	. $(VIRTUALENV_DIR)/bin/activate && pandoc --from=markdown --to=rst --output=README.rst README.md
+
+pypi-upload:
+ 	rm -rf dist
+ 	. $(VIRTUALENV_DIR)/bin/activate && \
+		python setup.py sdist && \
+		twine upload dist/*
+
+bumpversion-patch:
+	. $(VIRTUALENV_DIR)/bin/activate && \
+		bump2version patch
+
+bumpversion-minor:
+	. $(VIRTUALENV_DIR)/bin/activate && \
+		bump2version minor
+
+bumpversion-major:
+	. $(VIRTUALENV_DIR)/bin/activate && \
+		bump2version major
