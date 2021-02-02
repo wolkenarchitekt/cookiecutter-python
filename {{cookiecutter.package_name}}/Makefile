@@ -5,6 +5,10 @@ VIRTUALENV_DIR = {{ cookiecutter.virtualenv_dir }}
 VOLUMES = -v $$(pwd):/code
 DOCKER_RUN = docker run --rm -it $(VOLUMES) $(CONTAINER)
 
+# Extract MAJOR.MINOR python version 
+PYTHON_VERSION := $(shell cat $(PWD)/.python-version | awk -F \. {'print $$1"."$$2'})
+
+
 help:
 	# Print help by extracting ##-comments per target
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

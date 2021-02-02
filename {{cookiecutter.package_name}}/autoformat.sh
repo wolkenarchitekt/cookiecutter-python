@@ -27,7 +27,7 @@ autoformat_file() {
         -o "${file}" \
         "${file}"
     fi
-    git diff "${tmpfile}" "${file}"
+    git --no-pager diff "${tmpfile}" "${file}"
 }
 
 for file in "${@}"; do
