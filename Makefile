@@ -3,9 +3,15 @@ EXAMPLE = example
 build:  ## Create example from cookiecutter template
 	cookiecutter --overwrite-if-exists --no-input --config-file ./sample_config .
 
-test:  ## Test generated example
+test: test-docker test-virtualenv
+
+test-docker:  ## Test generated example
 	$(MAKE) build
-	cd $(EXAMPLE) && $(MAKE) docker-build docker-test virtualenv-create virtualenv-test
+	cd $(EXAMPLE) && $(MAKE) docker-build docker-test
+
+test-virtualenv:  ## Test generated example
+	$(MAKE) build
+	cd $(EXAMPLE) && $(MAKE) virtualenv-create virtualenv-test virtualenv-lint
 
 clean:
 	rm -rf $(EXAMPLE)/.venv

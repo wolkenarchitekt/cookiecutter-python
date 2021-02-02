@@ -56,6 +56,9 @@ virtualenv-shell:
 virtualenv-test:
 	. $(VIRTUALENV_DIR)/bin/activate && pytest
 
+virtualenv-lint:
+	. $(VIRTUALENV_DIR)/bin/activate && flake8 {{cookiecutter.package_name}}
+
 
 readme-convert-markdown-rst:
 	. $(VIRTUALENV_DIR)/bin/activate && pandoc --from=markdown --to=rst --output=README.rst README.md
