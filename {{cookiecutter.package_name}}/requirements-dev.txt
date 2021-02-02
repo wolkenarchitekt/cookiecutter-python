@@ -3,6 +3,7 @@ Faker==5.8.0
 flake8==3.8.4
 ipdb==0.13.4
 ipython==7.20.0
+mypy==0.800
 pandoc==1.0.2
 pylint==2.6.0
 pytest==6.2.2

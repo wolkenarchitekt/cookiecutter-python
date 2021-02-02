@@ -7,7 +7,7 @@ test: test-docker test-virtualenv
 
 test-docker:  ## Test generated example
 	$(MAKE) build
-	cd $(EXAMPLE) && $(MAKE) docker-build docker-test
+	cd $(EXAMPLE) && $(MAKE) docker-build docker-test docker-lint
 
 test-virtualenv:  ## Test generated example
 	$(MAKE) build

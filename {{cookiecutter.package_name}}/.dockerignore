@@ -1,2 +1,10 @@
 **/__pycache__
 **/*.pyc
+.venv
+.vscode
+.idea
+.mypy_cache
+*.egg-info
+*.egg
+.git
+.gitignore

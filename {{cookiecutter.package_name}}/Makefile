@@ -9,19 +9,23 @@ DOCKER_RUN = docker run --rm -it $(VOLUMES) $(CONTAINER)
 PYTHON_VERSION := $(shell cat $(PWD)/.python-version | awk -F \. {'print $$1"."$$2'})
 
 
+# Print help by extracting ##-comments per target
 help:
-	# Print help by extracting ##-comments per target
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 
-docker-clean clean:
+act:
+	act
+
+
+docker-clean:
 	-docker stop $(CONTAINER)
 	-docker rm -f $(CONTAINER)
 
-docker-build build:  ## Build Docker container
+docker-build:  ## Build Docker container
 	docker build -t $(CONTAINER) .
 
-docker-run run:  ## Run Docker container
+docker-run:  ## Run Docker container
 	$(DOCKER_RUN)
 
 docker-shell:  ## Run Docker shell
@@ -33,6 +37,9 @@ docker-test test:
 docker-ipython:
 	$(DOCKER_RUN) ipython
 
+docker-lint:
+	$(DOCKER_RUN) flake8 {{cookiecutter.package_name}}
+
 
 virtualenv-create:
 	python$(PYTHON_VERSION) -m venv $(VIRTUALENV_DIR)
@@ -43,12 +50,8 @@ virtualenv-create:
 		pip install -e .
 	@echo "Activate virtualenv:\n. $(VIRTUALENV_DIR)/bin/activate"
 
-virtualenv-runserver:
-	. $(VIRTUALENV_DIR)/bin/activate && \
-    	python opentunes_api/main.py server
-
 virtualenv-autoformat:
-	. $(VIRTUALENV_DIR)/bin/activate && ./autoformat.sh $$(find opentunes_api/ -name "*.py" -printf "%p ")
+	. $(VIRTUALENV_DIR)/bin/activate && ./autoformat.sh $$(find {{cookiecutter.package_name}}/ -name "*.py" -printf "%p ")
 
 virtualenv-shell:
 	. $(VIRTUALENV_DIR)/bin/activate && ipython
@@ -57,7 +60,9 @@ virtualenv-test:
 	. $(VIRTUALENV_DIR)/bin/activate && pytest
 
 virtualenv-lint:
-	. $(VIRTUALENV_DIR)/bin/activate && flake8 {{cookiecutter.package_name}}
+	. $(VIRTUALENV_DIR)/bin/activate && \
+		flake8 {{cookiecutter.package_name}} && \
+		mypy {{cookiecutter.package_name}}
 
 
 readme-convert-markdown-rst:
