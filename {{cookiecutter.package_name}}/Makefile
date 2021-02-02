@@ -31,14 +31,14 @@ docker-run:  ## Run Docker container
 docker-shell:  ## Run Docker shell
 	$(DOCKER_RUN) bash
 
-docker-test test:
+docker-test:
 	$(DOCKER_RUN) pytest
 
 docker-ipython:
 	$(DOCKER_RUN) ipython
 
 docker-lint:
-	$(DOCKER_RUN) flake8 {{cookiecutter.package_name}}
+	$(DOCKER_RUN) flake8 {{cookiecutter.module_name}}
 
 
 virtualenv-create:
@@ -51,7 +51,7 @@ virtualenv-create:
 	@echo "Activate virtualenv:\n. $(VIRTUALENV_DIR)/bin/activate"
 
 virtualenv-autoformat:
-	. $(VIRTUALENV_DIR)/bin/activate && ./autoformat.sh $$(find {{cookiecutter.package_name}}/ -name "*.py" -printf "%p ")
+	. $(VIRTUALENV_DIR)/bin/activate && ./autoformat.sh $$(find {{cookiecutter.module_name}}/ -name "*.py" -printf "%p ")
 
 virtualenv-shell:
 	. $(VIRTUALENV_DIR)/bin/activate && ipython
@@ -61,8 +61,8 @@ virtualenv-test:
 
 virtualenv-lint:
 	. $(VIRTUALENV_DIR)/bin/activate && \
-		flake8 {{cookiecutter.package_name}} && \
-		mypy {{cookiecutter.package_name}}
+		flake8 {{cookiecutter.module_name}} && \
+		mypy {{cookiecutter.module_name}}
 
 
 readme-convert-markdown-rst:
