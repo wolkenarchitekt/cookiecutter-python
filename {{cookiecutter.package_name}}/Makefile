@@ -17,7 +17,6 @@ help:
 act:
 	act
 
-
 docker-clean:
 	-docker stop $(CONTAINER)
 	-docker rm -f $(CONTAINER)
@@ -69,8 +68,8 @@ readme-convert-markdown-rst:
 	. $(VIRTUALENV_DIR)/bin/activate && pandoc --from=markdown --to=rst --output=README.rst README.md
 
 pypi-upload:
- 	rm -rf dist
- 	. $(VIRTUALENV_DIR)/bin/activate && \
+	rm -rf dist
+	. $(VIRTUALENV_DIR)/bin/activate && \
 		python setup.py sdist && \
 		twine upload dist/*
 

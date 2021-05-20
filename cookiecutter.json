@@ -6,5 +6,5 @@
   "cli_script": "{{ cookiecutter.package_name }}",
   "virtualenv_dir": ".venv",
   "docker_container_name": "{{ cookiecutter.package_name }}",
-  "python_version": "3.8.5"
+  "python_version": "3.9.5"
 }
