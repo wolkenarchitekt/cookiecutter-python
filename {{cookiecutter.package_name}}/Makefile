@@ -17,6 +17,8 @@ help:
 act:
 	act
 
+test: docker-build docker-test
+
 docker-clean:
 	-docker stop $(CONTAINER)
 	-docker rm -f $(CONTAINER)
