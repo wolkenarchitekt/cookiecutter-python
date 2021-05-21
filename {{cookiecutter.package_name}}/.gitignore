@@ -1,3 +1,6 @@
+# Autoformat cache
+.autoformat_db
+
 # pandoc-generated Readme for pypi
 README.rst
 
