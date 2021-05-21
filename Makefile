@@ -11,7 +11,7 @@ test-docker:  ## Test generated example
 
 test-virtualenv:  ## Test generated example
 	$(MAKE) build
-	cd $(EXAMPLE) && $(MAKE) virtualenv-create virtualenv-test virtualenv-lint
+	cd $(EXAMPLE) && $(MAKE) virtualenv-create virtualenv-test virtualenv-lint virtualenv-autoformat virtualenv-upgrade
 
 clean:
 	rm -rf $(EXAMPLE)/.venv

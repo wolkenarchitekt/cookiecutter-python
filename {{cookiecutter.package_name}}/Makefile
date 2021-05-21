@@ -1,7 +1,9 @@
+MAKEFLAGS=--warn-undefined-variables
 .PHONY: help
 .DEFAULT_GOAL := help
 CONTAINER  = {{ cookiecutter.docker_container_name }}
-VIRTUALENV_DIR = {{ cookiecutter.virtualenv_dir }}
+VENV = {{ cookiecutter.virtualenv_dir }}
+VENV_BIN = $(VENV)/bin
 VOLUMES = -v $$(pwd):/code
 DOCKER_RUN = docker run --rm -it $(VOLUMES) $(CONTAINER)
 
@@ -13,7 +15,10 @@ PYTHON_VERSION := $(shell cat $(PWD)/.python-version | awk -F \. {'print $$1"."$
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+clean:
+	rm -rf .mypy_cache .pytest_cache *.egg-info .pytest_cache
 
+# Install act: curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
 act:
 	act
 
@@ -44,47 +49,50 @@ docker-lint:
 	$(DOCKER_RUN) flake8 {{cookiecutter.module_name}}
 
 
+$(VENV): requirements.txt requirements-dev.txt setup.py
+	python$(PYTHON_VERSION) -m venv $(VENV)
+	$(VENV_BIN)/pip install --upgrade pip setuptools && \
+	$(VENV_BIN)/pip install -r requirements.txt && \
+	$(VENV_BIN)/pip install -r requirements-dev.txt && \
+	$(VENV_BIN)/pip install -e .
+	touch $(VENV)
+
 virtualenv-create:
-	python$(PYTHON_VERSION) -m venv $(VIRTUALENV_DIR)
-	. $(VIRTUALENV_DIR)/bin/activate && \
-		pip install --upgrade pip setuptools && \
-		pip install -r requirements.txt && \
-		pip install -r requirements-dev.txt && \
-		pip install -e .
-	@echo "Activate virtualenv:\n. $(VIRTUALENV_DIR)/bin/activate"
+	rm -rf $(VENV)
+	$(MAKE) $(VENV)
 
 virtualenv-autoformat:
-	. $(VIRTUALENV_DIR)/bin/activate && autoformat {{cookiecutter.module_name}}
+	$(VENV_BIN)/autoformat {{cookiecutter.module_name}}
 
 virtualenv-shell:
-	. $(VIRTUALENV_DIR)/bin/activate && ipython
+	$(VENV_BIN)/ipython
 
 virtualenv-test:
-	. $(VIRTUALENV_DIR)/bin/activate && pytest
+	$(VENV_BIN)/pytest
 
 virtualenv-lint:
-	. $(VIRTUALENV_DIR)/bin/activate && \
-		flake8 {{cookiecutter.module_name}} && \
-		mypy {{cookiecutter.module_name}}
+	$(VENV_BIN)/flake8 {{cookiecutter.module_name}}
+	$(VENV_BIN)/mypy {{cookiecutter.module_name}}
+
+virtualenv-upgrade:
+	$(VENV_BIN)/pur -r requirements.txt
+	$(VENV_BIN)/pur -r requirements-dev.txt
 
 
 readme-convert-markdown-rst:
-	. $(VIRTUALENV_DIR)/bin/activate && pandoc --from=markdown --to=rst --output=README.rst README.md
+	. $(VENV)/bin/activate && pandoc --from=markdown --to=rst --output=README.rst README.md
 
 pypi-upload:
 	rm -rf dist
-	. $(VIRTUALENV_DIR)/bin/activate && \
+	. $(VENV)/bin/activate && \
 		python setup.py sdist && \
 		twine upload dist/*
 
 bumpversion-patch:
-	. $(VIRTUALENV_DIR)/bin/activate && \
-		bump2version patch
+	$(VENV_BIN)/bump2version patch
 
 bumpversion-minor:
-	. $(VIRTUALENV_DIR)/bin/activate && \
-		bump2version minor
+	$(VENV_BIN)/bump2version minor
 
 bumpversion-major:
-	. $(VIRTUALENV_DIR)/bin/activate && \
-		bump2version major
+	$(VENV_BIN)/bump2version major
