@@ -19,6 +19,8 @@ act:
 
 test: docker-build docker-test
 
+autoformat: virtualenv-create virtualenv-autoformat
+
 docker-clean:
 	-docker stop $(CONTAINER)
 	-docker rm -f $(CONTAINER)
@@ -52,7 +54,7 @@ virtualenv-create:
 	@echo "Activate virtualenv:\n. $(VIRTUALENV_DIR)/bin/activate"
 
 virtualenv-autoformat:
-	. $(VIRTUALENV_DIR)/bin/activate && ./autoformat.sh $$(find {{cookiecutter.module_name}}/ -name "*.py" -printf "%p ")
+	. $(VIRTUALENV_DIR)/bin/activate && autoformat {{cookiecutter.module_name}}
 
 virtualenv-shell:
 	. $(VIRTUALENV_DIR)/bin/activate && ipython
