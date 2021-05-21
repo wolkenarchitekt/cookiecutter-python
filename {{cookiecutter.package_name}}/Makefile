@@ -24,7 +24,7 @@ act:
 
 test: docker-build docker-test
 
-autoformat: virtualenv-create virtualenv-autoformat
+autoformat: virtualenv-autoformat
 
 docker-clean:
 	-docker stop $(CONTAINER)
