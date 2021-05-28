@@ -80,13 +80,13 @@ virtualenv-upgrade:
 
 
 readme-convert-markdown-rst:
-	. $(VENV)/bin/activate && pandoc --from=markdown --to=rst --output=README.rst README.md
+	# Needs pandoc to be installed on host
+	pandoc --from=markdown --to=rst --output=README.rst README.md
 
 pypi-upload:
 	rm -rf dist
-	. $(VENV)/bin/activate && \
-		python setup.py sdist && \
-		twine upload dist/*
+	$(VENV_BIN)/python setup.py sdist
+	$(VENV_BIN)/twine upload dist/*
 
 bumpversion-patch:
 	$(VENV_BIN)/bump2version patch

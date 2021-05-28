@@ -25,7 +25,6 @@ COPY . /code
 RUN mkdir -p $(python -m site --user-site)
 RUN cd $(python -m site --user-site) && python /code/setup.py develop
 
-# Configure IPython
+# Configure IPython (set old-style completion, enable autoreload extension)
 COPY config/ipython/ipython_config.py /root/.ipython/profile_default/
 COPY config/ipython/startup.py /root/.ipython/profile_default/startup/
-
