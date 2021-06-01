@@ -4,12 +4,12 @@ Cookiecutter scaffold to create minimal Python application.
 Features:
 
 * proper module setup with setup.py and requirements.txt
-* Docker as sole requirement
-* Makefile for quick access to Docker commands
+* Prepared for usage with virtualenv and Docker
+* Makefile for quick access to all development commands
 * bumpversion integration
 * preconfigured linting (flake8, mypy)
-* preconfigured code autoformat
-* Sample Typer CLI module 
+* preconfigured autoformatter
+* Sample Typer CLI module
 * preconfigured pytest setup
 
 ## Installation
