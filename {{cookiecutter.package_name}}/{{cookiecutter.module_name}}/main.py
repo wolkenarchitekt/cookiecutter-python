@@ -5,7 +5,6 @@ import typer
 logger = logging.getLogger(__name__)
 
 typer_app = typer.Typer()
-state = {"verbose": False}
 
 
 @typer_app.command()
