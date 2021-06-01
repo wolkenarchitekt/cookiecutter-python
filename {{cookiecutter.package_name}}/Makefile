@@ -11,9 +11,8 @@ DOCKER_RUN = docker run --rm -it $(VOLUMES) $(CONTAINER)
 PYTHON_VERSION := $(shell cat $(PWD)/.python-version | awk -F \. {'print $$1"."$$2'})
 
 
-# Print help by extracting ##-comments per target
-help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+help: ## Display this help section
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9_-]+:.*?## / {printf "\033[36m%-38s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 clean:
 	rm -rf .mypy_cache .pytest_cache *.egg-info .pytest_cache
