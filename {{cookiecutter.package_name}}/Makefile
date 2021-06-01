@@ -5,9 +5,16 @@ CONTAINER  = {{ cookiecutter.docker_container_name }}
 VENV = {{ cookiecutter.virtualenv_dir }}
 VENV_BIN = $(VENV)/bin
 VOLUMES = -v $$(pwd):/code
-DOCKER_RUN = docker run --rm -it $(VOLUMES) $(CONTAINER)
 
-# Extract MAJOR.MINOR python version 
+# Allow running pytest with TTY, if present (disable on CI)
+INTERACTIVE:=$(shell [ -t 0 ] && echo 1)
+ifdef INTERACTIVE
+DOCKER_RUN = docker run --rm -it $(VOLUMES) $(CONTAINER)
+else
+DOCKER_RUN = docker run --rm $(VOLUMES) $(CONTAINER)
+endif
+
+# Extract MAJOR.MINOR python version
 PYTHON_VERSION := $(shell cat $(PWD)/.python-version | awk -F \. {'print $$1"."$$2'})
 
 
