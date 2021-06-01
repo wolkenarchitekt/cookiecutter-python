@@ -5,7 +5,12 @@ Features:
 
 * proper module setup with setup.py and requirements.txt
 * Docker as sole requirement
-* Makefile for quick access to Docker commands 
+* Makefile for quick access to Docker commands
+* bumpversion integration
+* preconfigured linting (flake8, mypy)
+* preconfigured code autoformat
+* Sample Typer CLI module 
+* preconfigured pytest setup
 
 ## Installation
 
