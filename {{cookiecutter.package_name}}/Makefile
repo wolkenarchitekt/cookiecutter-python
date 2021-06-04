@@ -66,8 +66,6 @@ $(VENV): requirements.txt requirements-dev.txt setup.py
 virtualenv-create:
 	rm -rf $(VENV)
 	$(MAKE) $(VENV)
-	# Install Typer Bash completion
-	$(VENV_BIN)/{{ cookiecutter.cli_script }} --install-completion bash
 
 virtualenv-autoformat:
 	$(VENV_BIN)/autoformat {{cookiecutter.module_name}}
