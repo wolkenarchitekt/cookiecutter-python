@@ -53,6 +53,7 @@ docker-ipython:
 
 docker-lint:
 	$(DOCKER_RUN) flake8 {{cookiecutter.module_name}}
+	$(DOCKER_RUN) mypy {{cookiecutter.module_name}}
 
 
 $(VENV): requirements.txt requirements-dev.txt setup.py
