@@ -3,3 +3,4 @@ flake8==3.9.2
 mypy==0.812
 pylint==2.8.2
 pytest==6.2.4
+requests==2.25.1
