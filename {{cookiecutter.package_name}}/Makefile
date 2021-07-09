@@ -63,6 +63,9 @@ virtualenv-upgrade:
 	$(VENV_BIN)/pur -r requirements.txt
 	$(VENV_BIN)/pur -r requirements-dev.txt
 
+virtualenv-runserver:
+	$(VENV_BIN)/uvicorn {{cookiecutter.module_name}}.api:fastapi_app --reload --port 5000
+
 
 readme-convert-markdown-rst:
 	# Needs pandoc to be installed on host
