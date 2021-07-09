@@ -13,6 +13,11 @@ test-virtualenv:  ## Test generated example
 	$(MAKE) build
 	cd $(EXAMPLE) && $(MAKE) virtualenv-create virtualenv-test virtualenv-lint virtualenv-autoformat virtualenv-upgrade
 
+upgrade-requirements:  ## Upgrade requirements
+	cd $(EXAMPLE) && $(MAKE) virtualenv-upgrade
+	cp example/requirements.txt {{cookiecutter.package_name}}/
+	cp example/requirements-dev.txt {{cookiecutter.package_name}}/
+
 clean:
 	rm -rf $(EXAMPLE)/.venv
 	rm -rf $(EXAMPLE)/project.egg-info

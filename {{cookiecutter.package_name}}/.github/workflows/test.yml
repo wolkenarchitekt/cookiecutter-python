@@ -28,6 +28,10 @@ jobs:
       run: |
         flake8 {{cookiecutter.module_name}}
 
+    - name: Lint with mypy
+      run: |
+        flake8 {{cookiecutter.module_name}}
+
     - name: Test with pytest
       run: |
         python -m pytest
