@@ -33,6 +33,11 @@ docker-lint:
 	$(DOCKER_RUN) flake8 {{cookiecutter.module_name}}
 	$(DOCKER_RUN) mypy {{cookiecutter.module_name}}
 
+docker-compose-test:
+	docker-compose run --rm {{ cookiecutter.package_name }} bash -c \
+		"while !</dev/tcp/postgres/5432; do sleep 1; done \
+		&& pytest --maxfail=1"
+
 
 $(VENV): requirements.txt requirements-dev.txt setup.py
 	python$(PYTHON_VERSION) -m venv $(VENV)
