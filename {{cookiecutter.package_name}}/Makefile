@@ -1,28 +1,6 @@
-MAKEFLAGS=--warn-undefined-variables
-.PHONY: help
-.DEFAULT_GOAL := help
-CONTAINER  = {{ cookiecutter.docker_container_name }}
-VENV = {{ cookiecutter.virtualenv_dir }}
-VENV_BIN = $(VENV)/bin
-VOLUMES = -v $$(pwd):/code
+# Universal Python/Docker development Makefile, version 0.1
 
-# Allow running pytest with TTY, if present (disable on CI)
-INTERACTIVE:=$(shell [ -t 0 ] && echo 1)
-ifdef INTERACTIVE
-DOCKER_RUN = docker run --rm -it $(VOLUMES) $(CONTAINER)
-else
-DOCKER_RUN = docker run --rm $(VOLUMES) $(CONTAINER)
-endif
-
-# Extract MAJOR.MINOR python version
-PYTHON_VERSION := $(shell cat $(PWD)/.python-version | awk -F \. {'print $$1"."$$2'})
-
-
-help: ## Display this help section
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9_-]+:.*?## / {printf "\033[36m%-38s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
-
-clean:
-	rm -rf .mypy_cache .pytest_cache *.egg-info .pytest_cache
+include Makefile.h
 
 # Install act: curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
 act:
@@ -33,11 +11,11 @@ test: docker-build docker-test
 autoformat: virtualenv-autoformat
 
 docker-clean:
-	-docker stop $(CONTAINER)
-	-docker rm -f $(CONTAINER)
+	-docker stop $(DOCKER_TAG)
+	-docker rm -f $(DOCKER_TAG)
 
 docker-build:  ## Build Docker container
-	docker build -t $(CONTAINER) .
+	$(DOCKER_BUILD_CMD)
 
 docker-run:  ## Run Docker container
 	$(DOCKER_RUN)
