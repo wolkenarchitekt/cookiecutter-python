@@ -1,3 +1,5 @@
+# Universal Python/Docker development Makefile, version 0.1
+
 include Makefile.h
 
 # Install act: curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
