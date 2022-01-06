@@ -34,11 +34,12 @@ docker-lint:
 	$(DOCKER_RUN) mypy {{cookiecutter.module_name}}
 
 
-$(VENV): requirements.txt requirements-dev.txt setup.py
+$(VENV): requirements.txt requirements-dev.txt requirements-test.txt setup.py
 	python$(PYTHON_VERSION) -m venv $(VENV)
 	$(VENV_BIN)/pip install --upgrade pip setuptools && \
 	$(VENV_BIN)/pip install -r requirements.txt && \
 	$(VENV_BIN)/pip install -r requirements-dev.txt && \
+	$(VENV_BIN)/pip install -r requirements-test.txt && \
 	$(VENV_BIN)/pip install -e .
 	touch $(VENV)
 
