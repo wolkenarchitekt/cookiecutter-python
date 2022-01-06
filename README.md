@@ -1,5 +1,7 @@
 # Cookiecutter for simple Python application
 
+[![tests][test-badge]][test-url]
+
 Cookiecutter scaffold to create minimal Python application.
 Features:
 
@@ -34,3 +36,6 @@ To generate the example - thereby testing the scaffold, run:
 ```
 make build test
 ```
+
+[test-badge]: https://github.com/wolkenarchitekt/cookiecutter-python/actions/workflows/test.yml/badge.svg?branch=main
+[test-url]: https://github.com/wolkenarchitekt/cookiecutter-python/actions/workflows/test.yml
