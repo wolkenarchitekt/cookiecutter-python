@@ -3,6 +3,10 @@ EXAMPLE = example
 build:  ## Create example from cookiecutter template
 	cookiecutter --overwrite-if-exists --no-input --config-file ./sample_config .
 
+# Install act: curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
+act:
+	act
+
 test: test-docker test-virtualenv
 
 test-docker:  ## Test generated example
