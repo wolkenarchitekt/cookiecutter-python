@@ -10,14 +10,14 @@ typer_app = typer.Typer()
 @typer_app.command()
 def create(username: str):
     logger.debug("About to create a user")
-    logger.info(f"Deleting user: {username}")
+    logger.info("Deleting user: %s", username)
     logger.debug("Just created a user")
 
 
 @typer_app.command()
 def delete(username: str):
     logger.debug("About to delete a user")
-    logger.info(f"Deleting user: {username}")
+    logger.info("Deleting user: %s", username)
     logger.debug("Just deleted a user")
 
 
