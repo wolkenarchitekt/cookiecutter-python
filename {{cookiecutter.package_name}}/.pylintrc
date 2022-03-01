@@ -1,0 +1,10 @@
+[MASTER]
+extension-pkg-whitelist=pydantic
+
+[MESSAGES CONTROL]
+# C0114: Missing module docstring (missing-module-docstring)
+# C0115: Missing class docstring (missing-class-docstring)
+# C0116: Missing function or method docstring (missing-function-docstring)
+# R0903: Too few public methods (too-few-public-methods)
+# R0914: Too many local variables (too-many-locals)
+disable=C0114, C0115, C0116, R0903, R0914

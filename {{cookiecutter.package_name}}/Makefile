@@ -31,6 +31,7 @@ docker-ipython:
 
 docker-lint:
 	$(DOCKER_RUN) flake8 {{cookiecutter.module_name}}
+	$(DOCKER_RUN) pylint {{cookiecutter.module_name}}
 	$(DOCKER_RUN) mypy {{cookiecutter.module_name}}
 
 
@@ -58,11 +59,13 @@ virtualenv-test:
 
 virtualenv-lint:
 	$(VENV_BIN)/flake8 {{cookiecutter.module_name}}
+	$(VENV_BIN)/pylint {{cookiecutter.module_name}}
 	$(VENV_BIN)/mypy {{cookiecutter.module_name}}
 
 virtualenv-upgrade:
 	$(VENV_BIN)/pur -r requirements.txt
 	$(VENV_BIN)/pur -r requirements-dev.txt
+	$(VENV_BIN)/pur -r requirements-test.txt
 
 
 readme-convert-markdown-rst:
