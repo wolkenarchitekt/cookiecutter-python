@@ -1,3 +1,5 @@
+include Makefile.h
+
 EXAMPLE = example
 
 build:  ## Create example from cookiecutter template
