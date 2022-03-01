@@ -29,6 +29,27 @@ VENV = {{ cookiecutter.virtualenv_dir }}
 VENV_BIN = $(VENV)/bin
 VOLUMES = -v $$(pwd):/code
 
+# Use Dockerfile according to STAGE environment
+ifeq ($(STAGE), production)
+	DOCKER_BUILD_CMD = docker build -f Dockerfile . -t $(DOCKER_TAG)
+endif
+ifeq ($(STAGE), development)
+	DOCKER_TAG := $(DOCKER_TAG)-dev
+	DOCKER_BUILD_CMD = docker build -f Dockerfile.dev . -t $(DOCKER_TAG)
+endif
+ifeq ($(STAGE), testing)
+	DOCKER_TAG := $(DOCKER_TAG)-test
+	DOCKER_BUILD_CMD = docker build -f Dockerfile.test . -t $(DOCKER_TAG)
+endif
+
+# Allow running pytest with TTY, if present (disabled on CI)
+INTERACTIVE:=$(shell [ -t 0 ] && echo 1)
+ifdef INTERACTIVE
+DOCKER_RUN = docker run --rm -it $(VOLUMES) $(DOCKER_TAG)
+else
+DOCKER_RUN = docker run --rm $(VOLUMES) $(DOCKER_TAG)
+endif
+
 # Extract MAJOR.MINOR python version
 PYTHON_VERSION := $(shell cat $(PWD)/.python-version | awk -F \. {'print $$1"."$$2'})
 
